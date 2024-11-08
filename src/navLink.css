@@ -1,0 +1,16 @@
+.navlink{
+    color: #00CCFF;
+}
+.navlink:hover{
+    color: #89CFF0;
+}
+.combobox{
+    height: 45px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(245, 245, 245,245);
+    outline: none;
+    margin-bottom: 20px;
+    color: white;
+}
