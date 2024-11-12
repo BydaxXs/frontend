@@ -117,7 +117,7 @@ export default function CreateUser(){
                 email : email,
                 username : username,
                 role : selectedRole,
-                permisson : selectedPermisson,
+                permissonName : selectedPermisson,
                 costCenter : selectedDepto,
                 subDepto : selectedSubdepto,
                 password : password
