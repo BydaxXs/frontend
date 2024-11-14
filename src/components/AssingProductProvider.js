@@ -15,6 +15,8 @@ export default function AssingProductProvider(){
     const [selectedProviderName, setSelectedProviderName] = useState("");
     const [selectedProduct, setSelectedProduct] = useState({ productId : "" , productName : "" });
     const [productTable, setProductTtable] = useState([]);
+    const [selectedBrandFilter, setSelectedBrandFilter] = useState('');
+    const [selectedCategoryFilter, setSelectedCategoryFilter] = useState('');
     useEffect(() => {
         const getData = async () => {
             try {
@@ -36,6 +38,7 @@ export default function AssingProductProvider(){
         setSelectProvider(e.target.value);
     }
     const handleChangeBrandFilter = async (e) => {
+        setSelectedBrandFilter(e.target.value);
         const filterProduct = e.target.value;
         const config = {
             brandFilter : filterProduct
@@ -48,9 +51,9 @@ export default function AssingProductProvider(){
             setProductTtable([]);
             setCategoryComboboxStatus(false);
         }
-        console.log(filterProduct);
     }
     const handleChangeCategoryFilter = async (e) => {
+        setSelectedCategoryFilter(e.target.value);
         const filterCategory = e.target.value;
         const config = {
             categoryFilter : filterCategory
@@ -93,6 +96,17 @@ export default function AssingProductProvider(){
             }
         }
     }
+    const cancelButton = () => {
+        setSelectProvider('');
+        setSelectedProduct({ productId : "" , productName : "" });
+        setSelectedProviderName('');
+        setSelectedBrandFilter('');
+        setSelectedCategoryFilter('');
+        setProductTtable([]);
+        customToast('error','Cancelado');
+        setBrandComboboxStatus(false);
+        setCategoryComboboxStatus(false);
+    }
     return(
         <>
         <h4 className="fw-bold py-3 mb-4 text-white">
@@ -103,12 +117,12 @@ export default function AssingProductProvider(){
                 <div className="card">
                     <div className="row">
                         <div className="col-md-6">
-                            <h5 className="card-header">Nombre del menu</h5>
+                            <h5 className="card-header">Proveedor</h5>
                             <div className="card-body">
                                 <div className="row">
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Proveedor</label>
-                                        <select className="form-select border-dark" onChange={handleChangeProvider}>
+                                        <select className="form-select border-dark" onChange={handleChangeProvider} value={selectProvider}>
                                             <option selected>Seleccione el proveedor</option>
                                             {providerList.map(providerData => 
                                                 <option value={providerData._id} provider-name={providerData.providerFantasyName}>{providerData.providerFantasyName}</option>
@@ -132,7 +146,7 @@ export default function AssingProductProvider(){
                                     <div className="mb-3 col-md">
                                         <button type="button" className="btn btn-primary me-2" onClick={assingProductToProvider}>Agregar Producto a Proveedor</button>
                                         <Toaster/>
-                                        <button type="button" className="btn btn-outline-secondary">Cancelar</button>
+                                        <button type="button" className="btn btn-outline-secondary" onClick={cancelButton}>Cancelar</button>
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +158,7 @@ export default function AssingProductProvider(){
                                 <div className="row">
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Marca de producto</label>
-                                        <select className="form-select border-dark" onChange={handleChangeBrandFilter} disabled={brandComboboxStatus}>
+                                        <select className="form-select border-dark" onChange={handleChangeBrandFilter} disabled={brandComboboxStatus} value={selectedBrandFilter}>
                                             <option value={false} selected>Seleccione una marca</option>
                                             {brandList.map(brandData => 
                                                 <option value={brandData._id}>{brandData.productBrandName}</option>
@@ -153,7 +167,7 @@ export default function AssingProductProvider(){
                                     </div>
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Categoria de producto</label>
-                                        <select className="form-select border-dark" onChange={handleChangeCategoryFilter} disabled={categoryComboboxStatus}>
+                                        <select className="form-select border-dark" onChange={handleChangeCategoryFilter} disabled={categoryComboboxStatus} value={selectedCategoryFilter}>
                                             <option value={false} selected>Seleccione una categoria</option>
                                             {categoryList.map(categoryData =>
                                                 <option value={categoryData._id}>{categoryData.productCategoryName}</option>

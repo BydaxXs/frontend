@@ -106,6 +106,19 @@ export default function CreateProduct(){
             }
         }
     }
+    const cancelBrand = () => {
+        setBrandName('');
+    }
+    const cancelCategory = () => {
+        setCategoryName('');
+    }
+    const cancelCreateProduct = () => {
+        setProductModel('');
+        setBrandCategory('');
+        setProductBrandLink('');
+        setProductDescription('');
+        customToast('success','Ingreso cancelado');
+    }
     return(
         <>
         <h4 className="fw-bold py-3 mb-4 text-white">
@@ -120,19 +133,19 @@ export default function CreateProduct(){
                             <div className="card-body">
                             <h5 className="fw-bold">Crear Categoria / Marca de producto</h5>
                                 <div className="row">
-                                    <LabelInput class="mb-3 col-md-6" children="Nombre de la Categoria" placeholder="Nombre de categoria" function={handleChangeCategoryName}/>
-                                    <LabelInput class="mb-3 col-md-6" children="Nombre de la Marca" placeholder="Nombre de Marca" function={handleChangeBrandName}/>
+                                    <LabelInput class="mb-3 col-md-6" children="Nombre de la Categoria" placeholder="Nombre de categoria" function={handleChangeCategoryName} value={categoryName}/>
+                                    <LabelInput class="mb-3 col-md-6" children="Nombre de la Marca" placeholder="Nombre de Marca" function={handleChangeBrandName} value={brandName}/>
                                 </div>
                                 <div className="row">
                                     <div className="mb-3 col-md">
                                         <button type="button" className="btn btn-primary me-2" onClick={createCategory}>Crear Categoria</button>
                                         <Toaster/>
-                                        <button type="button" className="btn btn-outline-secondary">Cancelar</button>
+                                        <button type="button" className="btn btn-outline-secondary" onClick={cancelCategory}>Cancelar</button>
                                     </div>
                                     <div className="mb-3 col-md">
                                         <button type="button" className="btn btn-primary me-2" onClick={createBrand}>Crear Marca</button>
                                         <Toaster/>
-                                        <button type="button" className="btn btn-outline-secondary">Cancelar</button>
+                                        <button type="button" className="btn btn-outline-secondary" onClick={cancelBrand}>Cancelar</button>
                                     </div>
                                 </div>
                             </div>
@@ -141,12 +154,12 @@ export default function CreateProduct(){
                             <h5 className="card-header">Datos de producto</h5>
                             <div className="card-body">
                                 <div className="row">
-                                    <LabelInput class="mb-3 col-md-12" children="Modelo de producto" placeholder="Modelo del producto" function={handleChangeProductModel}/>
+                                    <LabelInput class="mb-3 col-md-12" children="Modelo de producto" placeholder="Modelo del producto" function={handleChangeProductModel} value={productModel}/>
                                 </div>
                                 <div className="row">
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Categoria del producto</label>
-                                        <select className="form-select border-dark" onChange={handleChangeBrandCategory}>
+                                        <select className="form-select border-dark" onChange={handleChangeBrandCategory} value={brandCategory}>
                                             <option selected>Seleccione la categoria del producto</option>
                                             {productCategory.map(categoryData => 
                                                 <option value={categoryData._id}>{categoryData.productCategoryName}</option>
@@ -155,7 +168,7 @@ export default function CreateProduct(){
                                     </div>
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Marca del producto</label>
-                                        <select className="form-select border-dark" onChange={handleChangeProductBrandLink}>
+                                        <select className="form-select border-dark" onChange={handleChangeProductBrandLink} value={productBrandLink}>
                                             <option selected>Seleccione la marca del producto</option>
                                             {productBrand.map(brandData => 
                                                 <option value={brandData._id}>{brandData.productBrandName}</option>
@@ -164,13 +177,13 @@ export default function CreateProduct(){
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <LabelInput class="mb-3 col-md-12" children="Descripcion" placeholder="Descripcion del Producto" function={handleChangeProductDescription}/>
+                                    <LabelInput class="mb-3 col-md-12" children="Descripcion" placeholder="Descripcion del Producto" function={handleChangeProductDescription} value={productDescription}/>
                                 </div>
                                 <div className="row">
                                     <div className="mb-3 col-md">
                                         <button type="button" className="btn btn-primary me-2" onClick={createProduct}>Crear Producto</button>
                                         <Toaster/>
-                                        <button type="button" className="btn btn-outline-secondary">Cancelar</button>
+                                        <button type="button" className="btn btn-outline-secondary" onClick={cancelCreateProduct}>Cancelar</button>
                                     </div>
                                 </div>
                             </div>

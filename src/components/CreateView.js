@@ -97,6 +97,16 @@ export default function CreateView(){
         await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATEVIEW, config);
         customToast('success','Vista creada correctamente');
     }
+    const cancelCreateView = () => {
+        setViweName('');
+        setAPIRoute('');
+        setSelectedDeptoView('');
+        setSelectedSubdeptoView('');
+        setSelectedProcessView('');
+        setSelectedActionView('');
+        setSelectedPermissonView('');
+        setFrontRoute('');
+    }
     return(
         <>
         <h4 className="fw-bold py-3 mb-4 text-white">
@@ -110,13 +120,13 @@ export default function CreateView(){
                             <h5 className="card-header">Datos de la vista</h5>
                             <div className="card-body">
                                 <div className="row">
-                                    <LabelInput class='mb-3 col-md-6' children='Nombre de la vista' placeholder='Nombre de vista' function={handleChangeViewName}/>
-                                    <LabelInput class='mb-3 col-md-6' children='Ruta de API' placeholder='Ruta de API' function={handleChangeAPIRoute}/>
+                                    <LabelInput class='mb-3 col-md-6' children='Nombre de la vista' placeholder='Nombre de vista' function={handleChangeViewName} value={viewName}/>
+                                    <LabelInput class='mb-3 col-md-6' children='Ruta de API' placeholder='Ruta de API' function={handleChangeAPIRoute} value={APIRoute}/>
                                 </div>
                                 <div className="row">
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Departamento</label>
-                                        <select className="form-select border-dark" onChange={handleChangeDeptoView}>
+                                        <select className="form-select border-dark" onChange={handleChangeDeptoView} value={selectedDeptoView}>
                                             <option value='' selected>Seleccione Departamento</option>
                                             {deptoList.map(deptos => 
                                                 <option value={deptos._id}>{deptos.costCenterName}</option>
@@ -125,7 +135,7 @@ export default function CreateView(){
                                     </div>
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Subdepartamento</label>
-                                        <select className="form-select border-dark" onChange={handleChangeSubdeptoView}>
+                                        <select className="form-select border-dark" onChange={handleChangeSubdeptoView} value={selectedSubdeptoView}>
                                             <option value='' selected>Seleccione Subdepartamento</option>
                                             {subdeptoList.map(subdeptos => 
                                                 <option value={subdeptos._id}>{subdeptos.subDeptoName}</option>
@@ -136,7 +146,7 @@ export default function CreateView(){
                                 <div className="row">
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Proceso</label>
-                                        <select className="form-select border-dark" onChange={handleChangeProcessView}>
+                                        <select className="form-select border-dark" onChange={handleChangeProcessView} value={selectedProcessView}>
                                             <option value='' selected>Seleccione Proceso</option>
                                             {processList.map(process => 
                                                 <option value={process._id}>{process.subDeptoFunctionName}</option>
@@ -145,7 +155,7 @@ export default function CreateView(){
                                     </div>
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Accion</label>
-                                        <select className="form-select border-dark" onChange={handleChangeActionView}>
+                                        <select className="form-select border-dark" onChange={handleChangeActionView} value={selectedAcctionView}>
                                             <option value='' selected>Seleccione Accion</option>
                                             {acctionList.map(actions => 
                                                 <option value={actions._id}>{actions.actionName}</option>
@@ -156,20 +166,20 @@ export default function CreateView(){
                                 <div className="row">
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Permiso requerido de vista</label>
-                                        <select className="form-select border-dark" onChange={handleChangePermissonView}>
+                                        <select className="form-select border-dark" onChange={handleChangePermissonView} value={selectedPermissonView}>
                                             <option value='' selected>Seleccione Permiso</option>
                                             {permissonList.map(permissons => 
                                                 <option value={permissons._id}>{permissons.postName}</option>
                                             )}
                                         </select>
                                     </div>
-                                    <LabelInput class='mb-3 col-md-6' children='Ruta Visual' placeholder='/Ruta de vista' function={handleChangeFrontRoute}/>
+                                    <LabelInput class='mb-3 col-md-6' children='Ruta Visual' placeholder='/Ruta de vista' function={handleChangeFrontRoute} value={frontRoute}/>
                                 </div>
                                 <div className="row">
                                     <div className="mb-3 col-md">
                                         <button type="button" className="btn btn-primary me-2" onClick={createView}>Crear vista</button>
                                         <Toaster/>
-                                        <button type="button" className="btn btn-outline-secondary">Cancelar</button>
+                                        <button type="button" className="btn btn-outline-secondary" onClick={cancelCreateView}>Cancelar</button>
                                     </div>
                                 </div>
                             </div>

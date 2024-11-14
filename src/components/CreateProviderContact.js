@@ -59,6 +59,13 @@ export default function CreateProviderContact(){
             }
         }
     }
+    const cancelCreateContact = () => {
+        setContactName('');
+        setContactEmail('');
+        setContactPhone('');
+        setContactProvider('');
+        customToast('error','Cancelado');
+    }
     return(
         <>
         <h4 className="fw-bold py-3 mb-4 text-white">
@@ -72,14 +79,14 @@ export default function CreateProviderContact(){
                             <h5 className="card-header">Ingresar Datos</h5>
                             <div className="card-body">
                                 <div className="row">
-                                    <LabelInput class="mb-3 col-md-6" children="Nombre de contacto" placeholder="Nombre de contacto" function={handleChangeContactName}/>
-                                    <LabelInput class="mb-3 col-md-6" children="Correo de contacto" placeholder="Correo de contacto" function={handleChangeContactEmail}/>
+                                    <LabelInput class="mb-3 col-md-6" children="Nombre de contacto" placeholder="Nombre de contacto" function={handleChangeContactName} value={contactName}/>
+                                    <LabelInput class="mb-3 col-md-6" children="Correo de contacto" placeholder="Correo de contacto" function={handleChangeContactEmail} value={contactEmail}/>
                                 </div>
                                 <div className="row">
-                                    <LabelInput class="mb-3 col-md-6" children="Numero de contacto" placeholder="+56911111111" function={handleChangeContactPhone}/>
+                                    <LabelInput class="mb-3 col-md-6" children="Numero de contacto" placeholder="+56911111111" function={handleChangeContactPhone} value={contactPhone}/>
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Proveedor de contacto</label>
-                                        <select className="form-select border-dark" onChange={handleChangeContactProvider}>
+                                        <select className="form-select border-dark" onChange={handleChangeContactProvider} value={contactProvider}>
                                             <option seleted>Seleccione el Proveedor</option>
                                             {providers.map(provider =>
                                                 <option value={provider._id} key={provider._id}>{provider.providerRegisteredName}</option>
@@ -91,12 +98,12 @@ export default function CreateProviderContact(){
                                     <div className="mb-3 col-md">
                                         <button type="button" className="btn btn-primary me-2" onClick={createContact}>Crear Contacto</button>
                                         <Toaster/>
-                                        <button type="button" className="btn btn-outline-secondary">Cancelar</button>
+                                        <button type="button" className="btn btn-outline-secondary" onClick={cancelCreateContact}>Cancelar</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                             <h5 className="card-header">Asignar Contacto a Proveedor</h5>
                             <div className="card-body">
                                 <div className="row">
@@ -111,7 +118,7 @@ export default function CreateProviderContact(){
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
