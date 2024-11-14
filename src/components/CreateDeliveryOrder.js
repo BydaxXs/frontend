@@ -5,6 +5,7 @@ import { CREATEDELIVERYORDER, GETALLSTORES } from "../routes/APIRoutes";
 
 //react-hot-toast import
 import {Toaster, toast} from 'react-hot-toast'
+import customToast from "./Toast";
 
 export default function CreateDeliveryOrder(){
     const [orderNumber, setOrderNumber] = useState("");
@@ -107,6 +108,7 @@ export default function CreateDeliveryOrder(){
         setValue("");
         setDocNumber("");
         setSendDate("");
+        customToast('error','Cancelado');
     }
     const handleCancelInsert = () => {
         setOrderNumber("");
@@ -119,6 +121,7 @@ export default function CreateDeliveryOrder(){
         setDocNumber("");
         setSendDate("");
         setSendItems([""]);
+        customToast('error','Cancelado');
     }
     return(
         <>
