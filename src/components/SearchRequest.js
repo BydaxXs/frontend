@@ -8,7 +8,6 @@ export default function SearchRequest(){
     const userAccess = localStorage.getItem('userAccess');
     const user = localStorage.getItem('userID');
     let userAccessStatus = false;
-    //ESTADO BOTON EDIT
     if(userAccess === '111100' || userAccess === '111110' || userAccess === '111001' || userAccess === '111111'){
         userAccessStatus = true;
     }
@@ -20,25 +19,21 @@ export default function SearchRequest(){
         const getData = async () => {
             try {
                 if(userAccess === '111111' || userAccess === '111110' || userAccess === '111100'){
-                    //VER TODAS LAS SOLICITUDES
                     const requestData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLREQUESTDATA);
                     setRequests(requestData.data);
                 }else if(userAccess === '111001'){
-                    //VER TODAS LAS DE SU DEPARTAMENTO
                     const config = {
                         deptoID : userDeptoKey
                     }
                     const requestData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETDEPTOREQUEST, config);
                     setRequests(requestData.data);
                 }else if(userAccess === '111000'){
-                    //VER TODAS LAS DE SU SUBDEPARTAMENTO
                     const config = {
                         subdeptoID : userSubdeptoKey
                     }
                     const requestData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETSUBDEPTOREQUEST, config);
                     setRequests(requestData.data);
                 }else{
-                    //REDERIZA SOLO LAS SOLICITUDES HECHAS POR EL USUARIO
                     const config = {
                         requestorID : user
                     }

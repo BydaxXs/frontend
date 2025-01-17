@@ -19,8 +19,7 @@ export default function LoginCard(){
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const { accessToken, setAccessToken } = useContext(AuthContext);
-    //Toaster
-    //Hacer en componente
+
     const login = async () => {
         const loginConfig = {
             username : userName,
@@ -30,7 +29,7 @@ export default function LoginCard(){
         setAccessToken(res.data.access);
         const data = res.data.dataUser;
         if(!accessToken){
-            customToast('error',"Sin token de acceso");
+            customToast('error',"Error al iniciar sesion\nPorfavor reintentar");
         }
         else{
             const homeData = {
@@ -49,6 +48,7 @@ export default function LoginCard(){
             localStorage.setItem('userDepto', dataResponse[4].userDepto);
             localStorage.setItem('userSubdepto',dataResponse[5].userSubDepto);
             navigate(`/Landing`);
+            console.log('Iniciaste Sesion');
         }
     }
     const handleChangeName = (e) => {

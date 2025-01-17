@@ -22,6 +22,8 @@ import SearchRequestPage from './Pages/SearchRequestPage';
 import AssingProductProviderPage from './Pages/AssingProductProviderPage';
 import CreateViewPage from './Pages/CreateViewPage';
 import AssingViewsPage from './Pages/AssingViewsPage';
+import CreateDeptoPage from './Pages/CreateDeptoPage';
+import CreateSubdeptoFunction from './Pages/CreateSubdeptoFunctionPage';
 
 //Context
 import ProtectedRoute from './components/ProtectedRoute';
@@ -59,6 +61,8 @@ function App() {
                   <Route path = '/AssingProductProvider' element = {<AssingProductProviderPage/>}/>
                   <Route path = '/CreateView' element = {<CreateViewPage/>}/>
                   <Route path = '/AssingUserMenu' element = {<AssingViewsPage/>}/>
+                  <Route path = '/CreateDepto' element = {<CreateDeptoPage/>}/>
+                  <Route path = '/CreateSubdeptoFunction' element = {<CreateSubdeptoFunction/>}/>
                 </Route>
               <Route path = '*' element = {<Navigate to = '/' />} />
             </Routes>

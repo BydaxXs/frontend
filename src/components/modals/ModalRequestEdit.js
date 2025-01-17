@@ -3,7 +3,7 @@ import LabelInputDisabled from "../LabelInputDisabled";
 import LabelTextArea from "../LabelTextArea";
 import customToast from "../Toast";
 import axios from "axios";
-import { GETSPECIFICREQUESTDATA, UPDATEREQUESTSTATUS, UPLOADFILE } from '../../routes/APIRoutes';
+import { GETSPECIFICREQUESTDATA, UPDATEREQUESTSTATUS, UPLOADBUYAUTHORIZATION, UPLOADQUOTATION, UPLOADBUYRECEIPT, UPLOADDELIVERYGUIDE, UPLOADBUYORDER, GETREQUESTDOCUMENTATION } from '../../routes/APIRoutes';
 import { Toaster } from "react-hot-toast";
 
 export default function ModalRequestEdit(props){
@@ -20,6 +20,7 @@ export default function ModalRequestEdit(props){
     const [selectedRequestQuotations, setSelectedRequestQuotations] = useState([]);
     const [requestID, setRequestID] = useState(null);
     const [updatedRequestStatus, setUpdatedRequestStatus] = useState(null);
+    const [uploadFileType, setUploadFileType] = useState(null);
     useEffect(() => {
         const getData = async () => {
             if(selectedRequestID === ''){
@@ -41,8 +42,12 @@ export default function ModalRequestEdit(props){
                         itemsList.push(`- ${getSelectedRequestData.data.requestItems[i].quantity} x ${getSelectedRequestData.data.requestItems[i].item}`);
                     }
                     setSelectedRequestItems(itemsList.join('\n'));
-                    setSelectedRequestQuotations(getSelectedRequestData.data.quotations);
                     setRequestID(getSelectedRequestData.data.id);
+                    const docConfig = {
+                        requestId : selectedRequestID
+                    }
+                    const getSelectedRequestDocumentation = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETREQUESTDOCUMENTATION, docConfig);
+                    setSelectedRequestQuotations(getSelectedRequestDocumentation.data);
                 } catch (error) {
                     console.log('Error al conseguir los datos');
                 }
@@ -55,37 +60,131 @@ export default function ModalRequestEdit(props){
     }
     const handleChangeFile = (e) => {
         const file = e.target.files[0];
-        if(file){
-            const fileType = file.type;
-            if(fileType !== 'application/pdf'){
-                customToast('error','El archivo debe estar en formato PDF');
+        const fileType = file.type;
+        switch (fileType) {
+            case 'application/pdf':
+                setSelectedFile(file);
+                break;
+            case 'image/png':
+                setSelectedFile(file);
+                break;
+            case 'image/jpeg':
+                setSelectedFile(file);
+                break;
+            case '':
+                setSelectedFile(file);
+                break;
+            default:
+                customToast('error','Los formatos aceptados son PDF, PNG, JPG, MSG outlook');
                 setSelectedFile('');
                 fileInputValue.current.value = ""; 
-            }
-            setSelectedFile(file);
+                break;
         }
+    }
+    const handleChangeFileType = (e) => {
+        setUploadFileType(e.target.value);
     }
     const uploadQuotation = () => {
-        if(selectedFile === null){
-            customToast('error','Debe seleccionar un archivo');
-            console.log(selectedRequestID);
-        }else{
-            try {
-                const config = {
-                    myFile: selectedFile
-                }
-                console.log(selectedRequestID);
-                axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADFILE + selectedRequestID ,config, {
-                    headers: {
-                        'Content-Type' : 'multipart/form-data'
+        switch(uploadFileType){
+            case 'Autorizacion de compra':
+                if(selectedFile === null){
+                    customToast('error','Debe seleccionar un archivo');
+                }else{
+                    try {
+                        const config = {
+                            myFile: selectedFile
+                        }
+                        axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADBUYAUTHORIZATION + selectedRequestID ,config, {
+                            headers: {
+                                'Content-Type' : 'multipart/form-data'
+                            }
+                        });
+                        customToast('success','Autorizacion de compra subida correctamente');
+                    } catch (error) {
+                        customToast('error','Error al subir la cotizacion');
                     }
-                });
-                customToast('success','Cotizacion subida correctamente');
-            } catch (error) {
-                customToast('error','Error al subir la cotizacion');
-            }
+                }
+                break;
+            case 'Cotizacion':
+                if(selectedFile === null){
+                    customToast('error','Debe seleccionar un archivo');
+                }else{
+                    try {
+                        const config = {
+                            myFile: selectedFile
+                        }
+                        axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADQUOTATION + selectedRequestID ,config, {
+                            headers: {
+                                'Content-Type' : 'multipart/form-data'
+                            }
+                        });
+                        customToast('success','Cotizacion subida correctamente');
+                    } catch (error) {
+                        customToast('error','Error al subir la cotizacion');
+                    }
+                }
+                break;
+            case 'Factura':
+                if(selectedFile === null){
+                    customToast('error','Debe seleccionar un archivo');
+                }else{
+                    try {
+                        const config = {
+                            myFile: selectedFile
+                        }
+                        axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADBUYRECEIPT + selectedRequestID ,config, {
+                            headers: {
+                                'Content-Type' : 'multipart/form-data'
+                            }
+                        });
+                        customToast('success','Factura de compra subida correctamente');
+                    } catch (error) {
+                        customToast('error','Error al subir la cotizacion');
+                    }
+                }
+                break;
+            case 'Guia de despacho':
+                if(selectedFile === null){
+                    customToast('error','Debe seleccionar un archivo');
+                }else{
+                    try {
+                        const config = {
+                            myFile: selectedFile
+                        }
+                        axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADDELIVERYGUIDE + selectedRequestID ,config, {
+                            headers: {
+                                'Content-Type' : 'multipart/form-data'
+                            }
+                        });
+                        customToast('success','Factura de compra subida correctamente');
+                    } catch (error) {
+                        customToast('error','Error al subir la cotizacion');
+                    }
+                }
+                break;
+            case 'Orden de compra':
+                if(selectedFile === null){
+                    customToast('error','Debe seleccionar un archivo');
+                }else{
+                    try {
+                        const config = {
+                            myFile: selectedFile
+                        }
+                        axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADBUYORDER + selectedRequestID ,config, {
+                            headers: {
+                                'Content-Type' : 'multipart/form-data'
+                            }
+                        });
+                        customToast('success','Factura de compra subida correctamente');
+                    } catch (error) {
+                        customToast('error','Error al subir la cotizacion');
+                    }
+                }
+                break;   
+           default:
         }
     }
+    
     const updateRequestStatus = async () => {
         const config = {
             id : requestID,
@@ -94,7 +193,6 @@ export default function ModalRequestEdit(props){
         }
         await axios.post(process.env.REACT_APP_API_BASE_PATH + UPDATEREQUESTSTATUS, config);
         alert('Solicitud actualizada correctamente');
-        // customToast('success','Solicitud actualizada correctamente');
     }
     return(
         <>
@@ -117,16 +215,17 @@ export default function ModalRequestEdit(props){
                             <div className="mb-3 col-md-3">
                                 <label className="form-label fw-bold">Estado de solicitud</label>
                                 <select className="form-select border-dark" onChange={handleChangeRequestStatus}>
-                                    <option selected>{selectedRequestStatus}</option> {/* Estado de solicitud   selectedRequestStatus */}
+                                    <option selected>{selectedRequestStatus}</option>
+                                    <option value="Cotizaciones Aprobadas">Cotizaciones Aprobadas</option>
                                     <option value="En Cotizacion">En Cotizacion</option>
-                                    <option value="En Aprobacion">En Aprobacion</option>
                                     <option value="Compra Aprobada">Compra Aprobada</option>
-                                    <option value="En espera de recepcion">En espera de recepcion</option>
+                                    <option value="En Espera de Recepcion">En Espera de Recepcion</option>
                                     <option value="Compra recepcionada">Compra recepcionada</option>
                                     <option value="Compra enviada">Compra enviada</option>
+                                    <option value="Cerrado">Cerrado</option>
                                 </select>
                             </div>
-                            <LabelTextArea class="mb-3 fw-bold col-md-6" label="Items" value={selectedRequestItems}/> {/* Items   selectedRequestItems */}
+                            <LabelTextArea class="mb-3 fw-bold col-md-6" label="Items" value={selectedRequestItems}/>
                         </div>
                         <div className="container">
                             <label className="form-label fw-bold">Cotizaciones</label>
@@ -138,7 +237,7 @@ export default function ModalRequestEdit(props){
                                                 <i className="bi bi-filetype-pdf fs-1 filetype" role="button"/>
                                             </div>                                                       
                                             <div className="card-footer">
-                                                <p className="card-text">{quotations.substring(25)}</p>
+                                                <p className="card-text">{quotations.substring(12)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -147,14 +246,27 @@ export default function ModalRequestEdit(props){
                         </div>
                         <br/>
                         <div className="row">
+                            <div className="col-md-3 mb-3">
+                                <label className="form-label fw-bold">Seleccionar tipo de archivo a subir</label>
+                                <select className="form-select border-dark" onChange={handleChangeFileType}>
+                                    <option selected>Seleccione el tipo de documento</option>
+                                    <option value='Autorizacion de compra'>Autorizacion de compra</option>
+                                    <option value='Cotizacion'>Cotizacion</option>
+                                    <option value='Factura'>Factura</option>
+                                    <option value='Guia de despacho'>Guia de despacho</option>
+                                    <option value='Orden de compra'>Orden de compra</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="row">
                             <div className="col-md-5 mb-3">
-                                <label for="formFile" className="form-label fw-bold">Subir Cotizacion</label>
-                                <input className="form-control" type="file" id="formFile" ref={fileInputValue} accept=".pdf" onChange={handleChangeFile}></input>
+                                <label for="formFile" className="form-label fw-bold">Subir archivo</label>
+                                <input className="form-control" type="file" id="formFile" ref={fileInputValue} accept=".pdf, .jpg, ,.png" onChange={handleChangeFile}></input>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-5">
-                                <button type="button" className="btn btn-primary me-2" onClick={uploadQuotation}>Subir Cotizacion</button>
+                                <button type="button" className="btn btn-primary me-2" onClick={uploadQuotation}>Subir archivo</button>
                                 <Toaster/>
                                 <button type="button" className="btn btn-outline-secondary">Cancelar</button>
                             </div>

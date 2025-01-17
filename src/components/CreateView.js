@@ -91,7 +91,7 @@ export default function CreateView(){
             viewName : viewName,
             apiPath : APIRoute,
             frontPath : frontRoute, 
-            viewPermisson : selectedPermissonView,
+            permissonCode : selectedPermissonView,
             actionLink : selectedAcctionView
         }
         await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATEVIEW, config);

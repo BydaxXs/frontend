@@ -128,7 +128,7 @@ export default function CreateProduct(){
             <div className="col-md-12">
                 <div className="card">
                     <div className="row">
-                    <div className="col-md-6">
+                        <div className="col-md-6">
                             <h5 className="card-header">Datos de categoria y marca</h5>
                             <div className="card-body">
                             <h5 className="fw-bold">Crear Categoria / Marca de producto</h5>

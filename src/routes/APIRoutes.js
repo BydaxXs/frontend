@@ -1,6 +1,6 @@
 //AUTH ROUTES
-export const LOGIN = '/login';
-export const HOME = '/Home';
+export const LOGIN = '/auth/login';
+export const HOME = '/home/homeRedirect';
 
 //PROVIDERS ROUTES
 export const GETALLPROVIDERS = '/provider/getAllProviders';
@@ -13,19 +13,21 @@ export const CREATEPROVCONTACT = '/providerContact/createContact';
 //REQUEST ROUTES
 export const CREATEREQUEST = '/request/createRequest';
 export const GETALLREQUEST = '/request/getAllRequests';
-export const GETALLREQUESTDATA = '/request/getAllRequestsData'
+export const GETALLREQUESTDATA = '/request/getAllRequestData'
 export const GETSPECIFICREQUESTDATA = '/request/getSpecificRequest';
-export const UPDATEREQUESTSTATUS = '/request/updateRequest';
+export const UPDATEREQUESTSTATUS = '/request/updateRequestStatus';
 export const GETOWNREQUESTDATA = '/request/getOwnRequests';
-export const GETDEPTOREQUEST = '/request/getDeptoRequests';
-export const GETSUBDEPTOREQUEST = '/request/getSubdeptoRequests';
+export const GETDEPTOREQUEST = '/request/getAllRequestOfDepto';
+export const GETSUBDEPTOREQUEST = '/request/getAllRequestOfSubdepto';
+export const GETREQUESTDOCUMENTATION = '/request/getRequestDocumentation';
 
-//COSTECENTER ROUTES
-export const GETCOSTCENTER = '/costCenter/allCostCenters';
+//DEPTO ROUTES
+export const GETCOSTCENTER = '/depto/getAllDeptos';
 export const GETDEPTONOCRITIC = '/costCenter/allCostCenterExpectCritics';
+export const CREATEDEPTO = '/costCenter/createCostCenter';
 
 //SUBDEPTO ROUTES
-export const GETALLSUBDEPTOOFDEPTO = '/subDepto/getAllSubdetoOfDepto';
+export const GETALLSUBDEPTOOFDEPTO = '/subdepto/getAllSubdeptosOfDepto';
 export const CREATESUBDEPTO = '/subDepto/createSubDepto';
 
 //SUBDEPTOPFUNCTIONS ROUTES
@@ -79,8 +81,11 @@ export const GETALLCATEGORIES = "/productCategory/getAllCategories";
 export const GETALLSTORES = "/address/allStores";
 
 //UPLOAD QUOTTION ROUTES
-export const UPLOADFILE = "/uploads/";
-export const DOWNLOADQUOTATIONFOLDER = "/request/downloadCuotations";
+export const UPLOADQUOTATION = "/upload/uploadQuotation/";
+export const UPLOADBUYAUTHORIZATION = "/upload/uploadBuyAuthorization/";
+export const UPLOADBUYRECEIPT = "/upload/uploadBuyReceipt/";
+export const UPLOADDELIVERYGUIDE = "/upload/uploadDeliveryGuide/";
+export const UPLOADBUYORDER = "/upload/uploadBuyOrder/";
 
 //PERMISSON ROUTES
 export const GETALLPERMISSONS = '/permissons/getPermissons';

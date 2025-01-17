@@ -90,7 +90,7 @@ export default function AssingViews(){
 
     const AssingViewToUser = async () => {
         const config = {
-            idUser : selectedUser, 
+            id : selectedUser, 
             viewID : [`${selectedAction}`]
         }
         await axios.post(process.env.REACT_APP_API_BASE_PATH + SETUSERMENU, config);

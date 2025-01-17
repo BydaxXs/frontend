@@ -206,7 +206,7 @@ export default function CreateUser(){
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Departamento de usuario</label>
                                         <select className="form-select border-dark" onChange={handleChangeUserDepto}>
-                                            <option selected>Seleccione el departamento del usuario</option>
+                                            <option selected value=''>Seleccione el departamento del usuario</option>
                                             {deptosList.map(deptos => 
                                                 <option value={deptos._id}>{deptos.costCenterName}</option>
                                             )}

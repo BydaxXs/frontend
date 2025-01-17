@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LabelInputDisabled from "../LabelInputDisabled";
 import LabelTextArea from "../LabelTextArea";
-import { GETSPECIFICREQUESTDATA, DOWNLOADQUOTATIONFOLDER } from '../../routes/APIRoutes';
+import { GETSPECIFICREQUESTDATA, GETREQUESTDOCUMENTATION } from '../../routes/APIRoutes';
 import axios from "axios";
 
 export default function ModalRequestInfo(props){
@@ -35,27 +35,18 @@ export default function ModalRequestInfo(props){
                         itemsList.push(`- ${getSelectedRequestData.data.requestItems[i].quantity} x ${getSelectedRequestData.data.requestItems[i].item}`);
                     }
                     setSelectedRequestItems(itemsList.join('\n'));
-                    setSelectedRequestQuotations(getSelectedRequestData.data.quotations);
+                    const docConfig = {
+                        requestId : selectedRequestID
+                    }
+                    const getSelectedRequestDocumentation = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETREQUESTDOCUMENTATION, docConfig);
+                    setSelectedRequestQuotations(getSelectedRequestDocumentation.data);
                 } catch (error) {
                     console.log('Error al conseguir los datos');
                 }
             }
         }
         getData();
-    },[selectedRequestID]);
-
-    const downloadQuotations = async () => {
-        let selectedRequestDownloadStatus;
-        const config = {
-            folderID : selectedRequestID
-        }
-        try {
-            selectedRequestDownloadStatus = await axios.post(process.env.REACT_APP_API_BASE_PATH + DOWNLOADQUOTATIONFOLDER, config);
-            alert(selectedRequestDownloadStatus.data.msg);
-        } catch (error) {
-            alert(selectedRequestDownloadStatus.data.msg);
-        }
-    }
+    },[selectedRequestID, selectedRequestQuotations]);
 
     return(
         <>
@@ -88,7 +79,7 @@ export default function ModalRequestInfo(props){
                                             <i className="bi bi-filetype-pdf fs-1 filetype" role="button"/>
                                         </div>                                                       
                                         <div className="card-footer">
-                                            <p className="card-text">{quotations.substring(25)}</p>
+                                            <p className="card-text">{quotations.substring(12)}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -96,11 +87,6 @@ export default function ModalRequestInfo(props){
                             </div>
                         </div>
                         <br/>
-                        <div className="row">
-                            <div className="col-md-4">
-                                <button type='button' className="btn btn-success" onClick={downloadQuotations}>Obtener cotizaciones</button>
-                            </div>
-                        </div>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
