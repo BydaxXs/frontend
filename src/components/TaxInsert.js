@@ -122,14 +122,14 @@ export default function TaxInsert(){
         }else if(applicant === ""){
             customToast('error','Debe ingresar el solicitante');
         }else{
-            const config = {
+            const config = [{
                 docNumber : docNum,
                 emissionDate: emissionDate,
                 docType: docType,
                 supplier: supplier,
                 recivedItems : items,
                 applicant: applicant
-            }
+            }]
             fetch(process.env.REACT_APP_API_BASE_PATH + CREATETAXDOC,{
             method: "POST",
                 body: JSON.stringify(config),

@@ -91,9 +91,9 @@ export default function ModalRequestEdit(props){
                     customToast('error','Debe seleccionar un archivo');
                 }else{
                     try {
-                        const config = {
+                        const config = [{
                             myFile: selectedFile
-                        }
+                        }]
                         axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADBUYAUTHORIZATION + selectedRequestID ,config, {
                             headers: {
                                 'Content-Type' : 'multipart/form-data'
@@ -110,9 +110,9 @@ export default function ModalRequestEdit(props){
                     customToast('error','Debe seleccionar un archivo');
                 }else{
                     try {
-                        const config = {
+                        const config = [{
                             myFile: selectedFile
-                        }
+                        }]
                         axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADQUOTATION + selectedRequestID ,config, {
                             headers: {
                                 'Content-Type' : 'multipart/form-data'
@@ -129,9 +129,9 @@ export default function ModalRequestEdit(props){
                     customToast('error','Debe seleccionar un archivo');
                 }else{
                     try {
-                        const config = {
+                        const config = [{
                             myFile: selectedFile
-                        }
+                        }]
                         axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADBUYRECEIPT + selectedRequestID ,config, {
                             headers: {
                                 'Content-Type' : 'multipart/form-data'
@@ -148,9 +148,9 @@ export default function ModalRequestEdit(props){
                     customToast('error','Debe seleccionar un archivo');
                 }else{
                     try {
-                        const config = {
+                        const config = [{
                             myFile: selectedFile
-                        }
+                        }]
                         axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADDELIVERYGUIDE + selectedRequestID ,config, {
                             headers: {
                                 'Content-Type' : 'multipart/form-data'
@@ -167,9 +167,9 @@ export default function ModalRequestEdit(props){
                     customToast('error','Debe seleccionar un archivo');
                 }else{
                     try {
-                        const config = {
+                        const config = [{
                             myFile: selectedFile
-                        }
+                        }]
                         axios.post(process.env.REACT_APP_API_BASE_PATH + UPLOADBUYORDER + selectedRequestID ,config, {
                             headers: {
                                 'Content-Type' : 'multipart/form-data'

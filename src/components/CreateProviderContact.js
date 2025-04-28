@@ -46,12 +46,12 @@ export default function CreateProviderContact(){
             customToast('error', 'Debe seleccionar al proveedor');
         }else{
             try {
-                const config = {
+                const config = [{
                     providerContactName: contactName,
                     providerContactEmail: contactEmail,
                     providerContactNumber: contactPhone,
                     providerId : contactProvider
-                }
+                }]
                 await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATEPROVCONTACT, config);
                 customToast('success','Contacto Creado Correctamente');
             } catch (error) {
@@ -103,22 +103,6 @@ export default function CreateProviderContact(){
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="col-md-6">
-                            <h5 className="card-header">Asignar Contacto a Proveedor</h5>
-                            <div className="card-body">
-                                <div className="row">
-                                    <div className="mb-3 col-md-5">
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="mb-3 col-md">
-                                        <button type="button" className="btn btn-primary me-2">Asignar Contacto</button>
-                                        <Toaster/>
-                                        <button type="button" className="btn btn-outline-secondary">Cancelar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </div>

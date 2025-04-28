@@ -28,11 +28,11 @@ export default function CreateDepto(){
 
     const createDepto = async () => {
         try {
-            const config = {
+            const config = [{
                 costCenterCode : deptoCode,
                 costCenterName : deptoName,
                 costCenterNom : deptoAbreb
-            }
+            }]
             await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATEDEPTO, config);
             setDeptoCode('');
             setDeptoName('');
@@ -44,10 +44,10 @@ export default function CreateDepto(){
     }
     const createSubdepto = async () => {
         try {
-            const config = {
+            const config = [{
                 subDeptoName : subdeptoName,
-	            costCenterLink : selectedDeptoId
-            }
+	            deptoLink : selectedDeptoId
+            }]
             await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATESUBDEPTO, config);
             setSelectedDeptoId('');
             setSubdeptoName('');

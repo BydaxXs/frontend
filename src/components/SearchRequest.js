@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ModalRequestInfo from "./modals/ModalRequestInfo";
 import ModalRequestEdit from "./modals/ModalRequestEdit";
-import { GETALLREQUESTDATA, GETOWNREQUESTDATA, GETDEPTOREQUEST, GETSUBDEPTOREQUEST } from '../routes/APIRoutes';
+import { GETALLREQUESTDATA, GETOWNREQUESTDATA, GETDEPTOREQUEST, GETSUBDEPTOREQUEST, GETSPECIFICREQUESTDATA } from '../routes/APIRoutes';
 
 export default function SearchRequest(){
     const userAccess = localStorage.getItem('userAccess');
@@ -15,6 +15,16 @@ export default function SearchRequest(){
     const userSubdeptoKey = localStorage.getItem('userSubdepto');
     const [requests, setRequests] = useState([]);
     const [requestIdData, setRequestIdData] = useState("");
+
+    const [selectedRequestRequestor, setSelectedRequestRequestor] = useState(null);
+    const [selectedRequestDate, setSelectedRequestDate] = useState(null);
+    const [selectedRequestVia, setSelectedRequestVia] = useState(null);
+    const [selectedRequestStatus, setSelectedRequestStatus] = useState(null);
+    const [selectedRequestFinalUser, setSelectedRequestFinalUser] = useState(null);
+    const [selectedRequestFinalUserDepto, setSelectedRequestFinalUserDepto] = useState(null);
+    const [selectedRequestItems, setSelectedRequestItems] = useState("");
+    // const [selectedRequestQuotations, setSelectedRequestQuotations] = useState([]);
+
     useEffect(() => {
         const getData = async () => {
             try {
@@ -47,6 +57,28 @@ export default function SearchRequest(){
         getData();
     },[userAccess, userDeptoKey, userSubdeptoKey, user]);
     const handleChangeIsModalOpen = async (data) => {
+        const config = {
+            requestID : data.requestID
+        }
+        const getSelectedRequestData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETSPECIFICREQUESTDATA, config);
+        setSelectedRequestRequestor(getSelectedRequestData.data.requestor);
+        setSelectedRequestDate(getSelectedRequestData.data.requestDate);
+        setSelectedRequestVia(getSelectedRequestData.data.requestVia);
+        setSelectedRequestStatus(getSelectedRequestData.data.requestStatus.statusName);
+        setSelectedRequestFinalUser(getSelectedRequestData.data.finalUser.finalUserName);
+        setSelectedRequestFinalUserDepto(getSelectedRequestData.data.finalUser.finalUserDepto);
+        let itemsList = [];
+                   
+        for(let i = 0; i < getSelectedRequestData.data.requestItems.length; i++){
+            itemsList.push(`- ${getSelectedRequestData.data.requestItems[i].quantity} x ${getSelectedRequestData.data.requestItems[i].productName}`);
+        }
+        setSelectedRequestItems(itemsList.join('\n'));
+                    
+
+
+
+
+
         setRequestIdData(data.requestID);
     }
     return(
@@ -112,12 +144,19 @@ export default function SearchRequest(){
                                     </table>
                                     <ModalRequestInfo 
                                      id="modalInfo" 
-                                     labelInfo="ModalInfo"
+                                     labelInfo="ModalInfo" //AQUI PASA LOS DATOS QUE QUIERES MOSTRAR EN LA MODAL POR PROPS EJ REQUESTOT={STATEREQUESTOR}
+                                     requestRequestor={selectedRequestRequestor}
+                                     requestDate={selectedRequestDate}
+                                     requestVia={selectedRequestVia}
+                                     requestStatus={selectedRequestStatus}
+                                     requestFinalUser={selectedRequestFinalUser}
+                                     requestFinalUserDepto={selectedRequestFinalUserDepto}
+                                     requestItems={selectedRequestItems}
                                      requestIdData={requestIdData}
                                     />
                                     <ModalRequestEdit
                                      id="modalEdit"
-                                     labelEdit="modalEdit"
+                                     labelEdit="modalEdit" 
                                      requestIdData={requestIdData}
                                     />
                                 </div>

@@ -3,7 +3,7 @@ export const LOGIN = '/auth/login';
 export const HOME = '/home/homeRedirect';
 
 //PROVIDERS ROUTES
-export const GETALLPROVIDERS = '/provider/getAllProviders';
+export const GETALLPROVIDERS = '/provider/viewAllProviders';
 export const CREATEPROVIDER = '/provider/createProvider';
 export const SETPRODUCTTOPROVIDER = '/provider/addProductProvider';
 
@@ -37,7 +37,7 @@ export const GETALLSUBDEPTOFUNCTIONBYSUBDEPTO = '/subDeptoFunction/getAllFunctio
 export const GETALLACTIONBYPROCESS = '/action/getAllActionsByProcess';
 
 //COMMUNE ROUTES
-export const GETCOMMUNESOF = '/commune/allCommuneOf';
+export const GETALLCOMMUNESOFREGION = '/commune/allCommunesOfRegion';
 
 //USER ROUTES
 export const CREATEUSER = '/user/register';
@@ -64,31 +64,38 @@ export const CREATECOMMUNECOUNTRY = '/commune/createCommune';
 export const GETALLCOUNTRIES = '/country/allCountries';
 
 //PRODUCTS ROUTES
-export const CREATEPRODUCTS = '/products/createProduct';
+export const CREATEPRODUCTS = '/product/createProduct';
 export const GETPRODUCTSDATA = '/product/productsData';
 export const GETPRODUCTSDATABYBRAND = '/product/filterProductByBrand';
 export const GETPRODUCTSDATABYCATEGORY = '/product/filterProductByCategory';
 
 //PRODUCT BRAND ROUTES
-export const CREATEBRAND = '/productBrand/createBrand';
-export const GETALLBRANDS = "/productBrand/getAllProductBrand";
+export const CREATEBRAND = '/productBrand/createProductBrand';
+export const GETALLBRANDS = '/productBrand/viewAllProductBrand';
 
 //PRODUCT CATEGORY ROUTES
-export const CREATECATEGORY = "/productCategory/createCategory"
-export const GETALLCATEGORIES = "/productCategory/getAllCategories";
+export const CREATECATEGORY = '/productCategory/createProductCategory';
+export const GETALLCATEGORIES = '/productCategory/viewAllProductCategory';
 
 //ADDRESS ROUTES
-export const GETALLSTORES = "/address/allStores";
+export const GETALLSTORES = '/address/allStores';
 
 //UPLOAD QUOTTION ROUTES
-export const UPLOADQUOTATION = "/upload/uploadQuotation/";
-export const UPLOADBUYAUTHORIZATION = "/upload/uploadBuyAuthorization/";
-export const UPLOADBUYRECEIPT = "/upload/uploadBuyReceipt/";
-export const UPLOADDELIVERYGUIDE = "/upload/uploadDeliveryGuide/";
-export const UPLOADBUYORDER = "/upload/uploadBuyOrder/";
+export const UPLOADQUOTATION = '/upload/uploadQuotation/';
+export const UPLOADBUYAUTHORIZATION = '/upload/uploadBuyAuthorization/';
+export const UPLOADBUYRECEIPT = '/upload/uploadBuyReceipt/';
+export const UPLOADDELIVERYGUIDE = '/upload/uploadDeliveryGuide/';
+export const UPLOADBUYORDER = '/upload/uploadBuyOrder/';
 
 //PERMISSON ROUTES
 export const GETALLPERMISSONS = '/permissons/getPermissons';
 
 //VIEWS ROUTES
 export const CREATEVIEW = '/views/createDataView';
+
+//PRODUCT STATUS ROUTES
+export const CREATEPRODUCTSTATUS = '/productStatus/createProductStatus';
+export const VIEWALLPRODUCTSTATUS = '/productStatus/getAllProductStatus';
+
+//PRODUCT ARRIVALS
+export const CREATEPRODUCTARRIVAL = '/productArrival/createProductArrival';

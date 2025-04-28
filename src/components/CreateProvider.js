@@ -4,7 +4,7 @@ import axios from "axios";
 
 import customToast from "./Toast";
 import LabelInput from "./LabelInput";
-import { GETALLPROVIDERS, GETCOMMUNESOF, CREATEPROVIDER } from "../routes/APIRoutes";
+import { GETALLPROVIDERS, GETALLCOMMUNESOFREGION, CREATEPROVIDER } from "../routes/APIRoutes";
 
 export default function CreateProvider(){
     const [RUT, setRUT] = useState("");
@@ -15,16 +15,23 @@ export default function CreateProvider(){
     const [countryCoomune, setCountryCommune] = useState("");
     const [providerList, setProviderList] = useState([]);
     const [communeList, setCommuneList] = useState([]);
+
+    const getProvidersApiData = async () => {
+        const getProviders = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLPROVIDERS);
+        setProviderList(getProviders.data);
+    }
+    const getCommuneOfRegionAPI = async () =>{
+        const communeConfig = {
+            regionLink : "675b3e7552b5c461563a4fe4"
+        }
+        const getCommunesOfRegion = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLCOMMUNESOFREGION, communeConfig)
+        setCommuneList(getCommunesOfRegion.data);
+    }
     useEffect(() => {
         const getData = async () =>{
             try {
-                const getProviders = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLPROVIDERS);
-                setProviderList(getProviders.data);
-                const communeConfig = {
-                    countryName : "Chile"
-                }
-                const getCommunesOfChile = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETCOMMUNESOF, communeConfig)
-                setCommuneList(getCommunesOfChile.data);
+                getProvidersApiData();
+                getCommuneOfRegionAPI();
             } catch (error) {
                 console.log("Error al conseguir los datos");
             }
@@ -60,7 +67,6 @@ export default function CreateProvider(){
         setMarket("");
         setAddress("");
         setCountryCommune("");
-        customToast('error','Cancelado');
     }
     const createProvider = async () => {
         if(RUT === ""){
@@ -76,17 +82,18 @@ export default function CreateProvider(){
         }else if(countryCoomune === ""){
             customToast('error', 'Debe seleccionar la comuna de la oficina central del proveedor');
         }else{
-            const config = {
-                providerRUT : RUT,
+            const config = [{
+                providerRut : RUT,
                 providerRegisteredName : providerRegisteredName,
                 providerFantasyName : providerFantasyName,
                 market : market,
                 address : address,
                 countryCommune : countryCoomune
-            }
+            }]
             await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATEPROVIDER, config);
             customToast('success','Proveedor agregado correctamente');
             clearForm();
+            getProvidersApiData();
         }
     }
     return(
@@ -136,15 +143,13 @@ export default function CreateProvider(){
                                         <thead>
                                             <tr>
                                                 <th>RUT</th>
-                                                <th>Nombre Registrado</th>
-                                                <th>Nombre de Fantasia</th>
+                                                <th>Nombre proveedor</th>
                                             </tr>
                                         </thead>
                                         <tbody className="table-group-divider">
                                             {providerList.map(providerList => 
                                             <tr key={providerList._id}>
-                                                <td>{providerList.providerRUT}</td>
-                                                <td>{providerList.providerRegisteredName}</td>
+                                                <td>{providerList.providerRut}</td>
                                                 <td>{providerList.providerFantasyName}</td>
                                             </tr>
                                                 )}

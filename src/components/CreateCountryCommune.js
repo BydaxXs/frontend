@@ -45,9 +45,9 @@ export default function CreateCountryCommune(){
             customToast('error','Debes agregar el nombre del país');
         }else{
             try {
-                const config = {
+                const config = [{
                     countryName : countryName
-                }
+                }]
                 axios.post(process.env.REACT_APP_API_BASE_PATH + CREATECOUNTRY, config);
                 customToast('success','Pais Creado Correctamente');
                 setCountryName("");

@@ -15,6 +15,29 @@ export default function CreateProduct(){
     const [brandCategory, setBrandCategory] = useState("");
     const [productBrand, setProductBrand] = useState([]);
     const [productCategory, setProductCategory] = useState([]);
+
+    const getProductBrandAPIData = async () => {
+        const productBrandData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLBRANDS);
+        setProductBrand(productBrandData.data);
+    }
+
+    const getProductCategoryAPIData = async () => {
+        const productCategoryData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLCATEGORIES);
+        setProductCategory(productCategoryData.data);
+    }
+    
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                getProductBrandAPIData();
+                getProductCategoryAPIData();
+            } catch (error) {
+                console.log("Error al conseguir los datos del servidor");
+            }
+        }
+        getData();
+    },[]);
+
     const handleChangeCategoryName = (e) => {
         setCategoryName(e.target.value);
     }
@@ -33,19 +56,7 @@ export default function CreateProduct(){
     const handleChangeProductBrandLink = (e) => {
         setProductBrandLink(e.target.value);
     }
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const productBrandData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLBRANDS);
-                setProductBrand(productBrandData.data);
-                const productCategoryData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLCATEGORIES);
-                setProductCategory(productCategoryData.data);
-            } catch (error) {
-                console.log("Error al conseguir los datos del servidor");
-            }
-        }
-        getData();
-    },[]);
+
     const createProduct = async () => {
         if(productModel === ""){
             customToast('error','Debe ingresar el modelo del producto');
@@ -57,13 +68,15 @@ export default function CreateProduct(){
             customToast('error','Debe seleccionar la categoria del producto');
         }else{
             try {
-                const config = {
+
+                const config = [{
                     model : productModel,
                     description : productDescription,
                     productBrandLink : productBrandLink,
                     productCategoryLink : brandCategory
-                }
+                }]
                 await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATEPRODUCTS, config);
+                
                 setProductModel("");
                 setProductDescription("");
                 setProductBrandLink("");
@@ -79,12 +92,14 @@ export default function CreateProduct(){
             customToast('error','Debe ingresar el nombre de la categoria');
         }else{
             try {
-                const createCategoryConfig = {
+                const createCategoryConfig = [{
                     productCategoryName : categoryName
-                }
-                await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATECATEGORY, createCategoryConfig);
-                setCategoryName("");
+                }]
+                const msg = await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATECATEGORY, createCategoryConfig);
+                console.log(msg.data.data.productCategoryName)
+                setCategoryName(msg.data.data.productCategoryName);
                 customToast('success', 'Categoria creada correctamente');
+                getProductCategoryAPIData();
             } catch (error) {
                 customToast('error', 'Error al crear la categoria');
             }
@@ -95,12 +110,13 @@ export default function CreateProduct(){
             customToast('error', 'Debe Ingresar el nombre de la marca');
         }else{
             try {
-                const createBrandConfig = {
+                const createBrandConfig = [{
                     productBrandName : brandName
-                }
+                }]
                 axios.post(process.env.REACT_APP_API_BASE_PATH + CREATEBRAND, createBrandConfig);
                 setBrandName("");
                 customToast('success', 'Marca creada correctamente');
+                getProductBrandAPIData();
             } catch (error) {
                 customToast('error', 'Error al crear la marca de productos');
             }
@@ -133,8 +149,27 @@ export default function CreateProduct(){
                             <div className="card-body">
                             <h5 className="fw-bold">Crear Categoria / Marca de producto</h5>
                                 <div className="row">
-                                    <LabelInput class="mb-3 col-md-6" children="Nombre de la Categoria" placeholder="Nombre de categoria" function={handleChangeCategoryName} value={categoryName}/>
-                                    <LabelInput class="mb-3 col-md-6" children="Nombre de la Marca" placeholder="Nombre de Marca" function={handleChangeBrandName} value={brandName}/>
+
+                                    <div className="mb-3 col-md-6">
+                                        <label className="form-label">Nombre de la Categoria</label>
+                                        <input className="form-control border-dark" list="dataCategoryOptions" placeholder="Nombre de la Categoria" onChange={handleChangeCategoryName} value={categoryName}/>
+                                        <datalist id="dataCategoryOptions">
+                                            {productCategory.map(categoryList => 
+                                                <option value={categoryList.productCategoryName}/>
+                                            )}
+                                            
+                                        </datalist>
+                                    </div>
+                                    <div className="mb-3 col-md-6">
+                                        <label className="form-label">Nombre de la Marca</label>
+                                        <input className="form-control border-dark" list="dataBrandOptions" placeholder="Nombre de Marca" onChange={handleChangeBrandName} value={brandName}/>
+                                        <datalist id="dataBrandOptions">
+                                            {productBrand.map(brandData => 
+                                                <option value={brandData.productBrandName} />
+                                            )}
+                                        </datalist>
+                                    </div>
+                                    {/* <LabelInput class="mb-3 col-md-6" children="Nombre de la Marca" placeholder="Nombre de Marca" function={handleChangeBrandName} value={brandName}/> */}
                                 </div>
                                 <div className="row">
                                     <div className="mb-3 col-md">

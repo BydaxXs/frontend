@@ -1,14 +1,14 @@
 import React from "react";
 import GenericNavbar from "../components/GenericNavbar";
-import AssingProductProvider from "../components/AssingProductProvider";
+import CreateProductArrival from "../components/CreateProductArrival";
 
-export default function AssingProductProviderPage(){
+export default function CreateProductArrivalPage(){
     return(
         <>
         <GenericNavbar/>
         <br/>
         <div className="container">
-            <AssingProductProvider/>
+            <CreateProductArrival/>
         </div>
         </>
     )

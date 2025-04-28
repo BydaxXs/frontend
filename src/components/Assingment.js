@@ -33,14 +33,14 @@ export default function Assingment(){
     }
 
     const insert = () => {
-        const config = {
+        const config = [{
             serie: serie,
             equipmentName : equipmentName,
             UserName : userName,
             address : [{
                 id : store
             }]
-        }
+        }]
         axios.post('http://localhost:4545/api/ver1/trace/assingment',config);
     }
 

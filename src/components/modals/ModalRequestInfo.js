@@ -1,53 +1,72 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import LabelInputDisabled from "../LabelInputDisabled";
 import LabelTextArea from "../LabelTextArea";
-import { GETSPECIFICREQUESTDATA, GETREQUESTDOCUMENTATION } from '../../routes/APIRoutes';
-import axios from "axios";
 
 export default function ModalRequestInfo(props){
     const selectedRequestID = props.requestIdData;
-    const [selectedRequestRequestor, setSelectedRequestRequestor] = useState(null);
-    const [selectedRequestDate, setSelectedRequestDate] = useState(null);
-    const [selectedRequestVia, setSelectedRequestVia] = useState(null);
-    const [selectedRequestStatus, setSelectedRequestStatus] = useState(null);
-    const [selectedRequestFinalUser, setSelectedRequestFinalUser] = useState(null);
-    const [selectedRequestFinalUserDepto, setSelectedRequestFinalUserDepto] = useState(null);
-    const [selectedRequestItems, setSelectedRequestItems] = useState("");
-    const [selectedRequestQuotations, setSelectedRequestQuotations] = useState([]);
-    useEffect(() => {
-        const getData = async () => {
-            if(selectedRequestID === ''){
-                console.log('Solicitud no encotrada')
-            }else{
-                try {
-                    const config = {
-                        requestID : selectedRequestID
-                    }
-                    const getSelectedRequestData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETSPECIFICREQUESTDATA, config);
-                    setSelectedRequestRequestor(getSelectedRequestData.data.requestor);
-                    setSelectedRequestDate(getSelectedRequestData.data.requestDate);
-                    setSelectedRequestVia(getSelectedRequestData.data.requestVia);
-                    setSelectedRequestStatus(getSelectedRequestData.data.requestStatus.statusName);
-                    setSelectedRequestFinalUser(getSelectedRequestData.data.finalUser.finalUserName);
-                    setSelectedRequestFinalUserDepto(getSelectedRequestData.data.finalUser.finalUserDepto);
-                    let itemsList = [];
-                    for(let i = 0; i < getSelectedRequestData.data.requestItems.length; i++){
-                        itemsList.push(`- ${getSelectedRequestData.data.requestItems[i].quantity} x ${getSelectedRequestData.data.requestItems[i].item}`);
-                    }
-                    setSelectedRequestItems(itemsList.join('\n'));
-                    const docConfig = {
-                        requestId : selectedRequestID
-                    }
-                    const getSelectedRequestDocumentation = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETREQUESTDOCUMENTATION, docConfig);
-                    setSelectedRequestQuotations(getSelectedRequestDocumentation.data);
-                } catch (error) {
-                    console.log('Error al conseguir los datos');
-                }
-            }
-        }
-        getData();
-    },[selectedRequestID, selectedRequestQuotations]);
 
+    const selectedRequestRequestor = props.requestRequestor
+    const selectedRequestDate = props.requestDate
+    const selectedRequestVia = props.requestVia
+    const selectedRequestStatus = props.requestStatus
+    const selectedRequestFinalUser = props.requestFinalUser 
+    const selectedRequestFinalUserDepto = props.requestFinalUserDepto
+    const selectedRequestItems = props.requestItems 
+
+
+
+
+
+
+
+
+
+    // const [selectedRequestRequestor, setSelectedRequestRequestor] = useState(null);
+    // const [selectedRequestDate, setSelectedRequestDate] = useState(null);
+    // const [selectedRequestVia, setSelectedRequestVia] = useState(null);
+    // const [selectedRequestStatus, setSelectedRequestStatus] = useState(null);
+    // const [selectedRequestFinalUser, setSelectedRequestFinalUser] = useState(null);
+    // const [selectedRequestFinalUserDepto, setSelectedRequestFinalUserDepto] = useState(null);
+    // const [selectedRequestItems, setSelectedRequestItems] = useState("");
+    // const [selectedRequestQuotations, setSelectedRequestQuotations] = useState([]);
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         if(selectedRequestID === ''){
+    //             console.log('Solicitud no encotrada')
+    //         }else{
+    //             try {
+    //                 const config = {
+    //                     requestID : selectedRequestID
+    //                 }
+                    
+    //                 const getSelectedRequestData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETSPECIFICREQUESTDATA, config);
+    //                 setSelectedRequestRequestor(getSelectedRequestData.data.requestor);
+    //                 setSelectedRequestDate(getSelectedRequestData.data.requestDate);
+    //                 setSelectedRequestVia(getSelectedRequestData.data.requestVia);
+    //                 setSelectedRequestStatus(getSelectedRequestData.data.requestStatus.statusName);
+    //                 setSelectedRequestFinalUser(getSelectedRequestData.data.finalUser.finalUserName);
+    //                 setSelectedRequestFinalUserDepto(getSelectedRequestData.data.finalUser.finalUserDepto);
+    //                 let itemsList = [];
+                   
+    //                 for(let i = 0; i < getSelectedRequestData.data.requestItems.length; i++){
+    //                     itemsList.push(`- ${getSelectedRequestData.data.requestItems[i].quantity} x ${getSelectedRequestData.data.requestItems[i].productName}`);
+    //                 }
+    //                 setSelectedRequestItems(itemsList.join('\n'));
+    //                 const docConfig = {
+    //                     requestId : selectedRequestID
+    //                 }
+    //                 const getSelectedRequestDocumentation = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETREQUESTDOCUMENTATION, docConfig);
+    //                 setSelectedRequestQuotations(getSelectedRequestDocumentation.data);
+                    
+    //             } catch (error) {
+    //                 console.log('Error al conseguir los datos');
+    //                 console.log(error);
+    //             }
+    //         }
+    //     }
+    //     getData();
+    // },[selectedRequestID, selectedRequestQuotations]);
+    
     return(
         <>
         <div className="modal" id={props.id} aria-labelledby={props.labelInfo} aria-hidden="true">
@@ -69,7 +88,7 @@ export default function ModalRequestInfo(props){
                             <LabelInputDisabled class="mb-3 fw-bold col-md-4" children="Departamento usuario final" value={selectedRequestFinalUserDepto}/> {/* Departamento usuario Final */}
                             <LabelTextArea class="mb-3 fw-bold col-md-4" label="Items" value={selectedRequestItems}/> {/* Items */}
                         </div>
-                        <div className="container">
+                        {/* <div className="container">
                             <label className="form-label fw-bold">Cotizaciones</label>
                             <div className="row">
                                 {selectedRequestQuotations.map(quotations =>
@@ -85,7 +104,7 @@ export default function ModalRequestInfo(props){
                                 </div>
                                 )}
                             </div>
-                        </div>
+                        </div> */}
                         <br/>
                     </div>
                     <div className="modal-footer">
