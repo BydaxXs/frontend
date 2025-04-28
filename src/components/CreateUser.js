@@ -35,7 +35,7 @@ export default function CreateUser(){
                 setDeptosList(deptoData.data);
                 if(selectedDepto !== ''){
                     let config = {
-                        costCenterLink : selectedDepto
+                        deptoLink : selectedDepto
                     }
                     const subdeptosData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLSUBDEPTOOFDEPTO, config);
                     setSubdeptosList(subdeptosData.data);
@@ -109,7 +109,7 @@ export default function CreateUser(){
     }
     const createUser = async () => {
         try {
-            const config = {
+            const config = [{
                 firstname : firstname,
                 secondname : secondname,
                 lastname : lastname,
@@ -121,7 +121,7 @@ export default function CreateUser(){
                 costCenter : selectedDepto,
                 subDepto : selectedSubdepto,
                 password : password
-            }
+            }]
             const userResponse = await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATEUSER, config);
             console.log(userResponse.data);
             if(userResponse.data.active !== null){
@@ -206,7 +206,7 @@ export default function CreateUser(){
                                     <div className="mb-3 col-md-6">
                                         <label className="form-label">Departamento de usuario</label>
                                         <select className="form-select border-dark" onChange={handleChangeUserDepto}>
-                                            <option selected>Seleccione el departamento del usuario</option>
+                                            <option selected value=''>Seleccione el departamento del usuario</option>
                                             {deptosList.map(deptos => 
                                                 <option value={deptos._id}>{deptos.costCenterName}</option>
                                             )}

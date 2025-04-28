@@ -76,7 +76,7 @@ export default function CreateDeliveryOrder(){
         successAdd();
     }
     const handleSend = async () => {
-        const config = {
+        const config = [{
             orderNumber:orderNumber,
             senderName:senderName,
             senderStore:senderStore,
@@ -84,7 +84,7 @@ export default function CreateDeliveryOrder(){
             reciverStore:reciverStore,
             sendItems:sendItems,
             sendDate:sendDate
-        }
+        }]
         await fetch(process.env.REACT_APP_API_BASE_PATH + CREATEDELIVERYORDER,{
             method: "POST",
             body: JSON.stringify(config),

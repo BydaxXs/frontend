@@ -8,7 +8,6 @@ export default function Landing(){
         <div>
             <GenericNavbar/>
             <div className="container">
-                <h4 className="fw-bold py-3 mb-4 text-white">Landing</h4>
                 <br/>
                 <br/>
                 <br/>

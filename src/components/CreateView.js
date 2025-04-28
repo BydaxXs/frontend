@@ -28,7 +28,7 @@ export default function CreateView(){
                 setDeptoList(deptoData.data);
                 if(selectedDeptoView !== ''){
                     let subdeptoConfig = {
-                        costCenterLink : selectedDeptoView
+                        deptoLink : selectedDeptoView
                     }
                     const subdeptoData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLSUBDEPTOOFDEPTO, subdeptoConfig);
                     setSubdeptoList(subdeptoData.data);
@@ -87,13 +87,13 @@ export default function CreateView(){
         setFrontRoute(e.target.value);
     }
     const createView = async () => {
-        const config = {
+        const config = [{
             viewName : viewName,
             apiPath : APIRoute,
             frontPath : frontRoute, 
-            viewPermisson : selectedPermissonView,
+            permissonCode : selectedPermissonView,
             actionLink : selectedAcctionView
-        }
+        }]
         await axios.post(process.env.REACT_APP_API_BASE_PATH + CREATEVIEW, config);
         customToast('success','Vista creada correctamente');
     }

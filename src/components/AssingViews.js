@@ -33,7 +33,7 @@ export default function AssingViews(){
                     setUserList(usersData.data);
                     if(selectedUser !== ''){
                         let subdeptoListConfig = {
-                        costCenterLink : selectedDepto
+                        deptoLink : selectedDepto
                     }
                     const subdeptoData = await axios.post(process.env.REACT_APP_API_BASE_PATH + GETALLSUBDEPTOOFDEPTO, subdeptoListConfig);
                     setSubdeptoList(subdeptoData.data);
@@ -89,10 +89,10 @@ export default function AssingViews(){
     }
 
     const AssingViewToUser = async () => {
-        const config = {
-            idUser : selectedUser, 
+        const config = [{
+            id : selectedUser, 
             viewID : [`${selectedAction}`]
-        }
+        }]
         await axios.post(process.env.REACT_APP_API_BASE_PATH + SETUSERMENU, config);
         customToast('success',`Vista ${selectedActionName} asignada a ${selectedUserName} correctamente`);
         setSelectedDepto('');

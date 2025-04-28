@@ -19,9 +19,13 @@ import RegisterContactPage from './Pages/RegisterContactPage';
 import CreateCountryCommunePage from './Pages/CreateCountryCommunePage';
 import ErrorPage from './components/Error';
 import SearchRequestPage from './Pages/SearchRequestPage';
-import AssingProductProviderPage from './Pages/AssingProductProviderPage';
 import CreateViewPage from './Pages/CreateViewPage';
 import AssingViewsPage from './Pages/AssingViewsPage';
+import CreateDeptoPage from './Pages/CreateDeptoPage';
+import CreateSubdeptoFunction from './Pages/CreateSubdeptoFunctionPage';
+import CreateProductStatus from './Pages/CreateProductStatusPage';
+import CreateProductArrival from './Pages/CreateProductArrivalPage';
+import CreateProductDeregisterPage from './Pages/CreateProductDeregisterPage';
 
 //Context
 import ProtectedRoute from './components/ProtectedRoute';
@@ -56,9 +60,13 @@ function App() {
                   <Route path = '/CreateUser' element = {<CreateUser/>}/>
                   <Route path = '/Error/:code:message' element = {<ErrorPage/>}/>
                   <Route path = '/SearchRequest' element = {<SearchRequestPage/>}/>
-                  <Route path = '/AssingProductProvider' element = {<AssingProductProviderPage/>}/>
                   <Route path = '/CreateView' element = {<CreateViewPage/>}/>
                   <Route path = '/AssingUserMenu' element = {<AssingViewsPage/>}/>
+                  <Route path = '/CreateDepto' element = {<CreateDeptoPage/>}/>
+                  <Route path = '/CreateSubdeptoFunction' element = {<CreateSubdeptoFunction/>}/>
+                  <Route path = '/CreateProductStatus' element = {<CreateProductStatus/>}/>
+                  <Route path = '/CreateProductArrival' element = {<CreateProductArrival/>}/>
+                  <Route path = '/productDeregister' element = {<CreateProductDeregisterPage/>}/>
                 </Route>
               <Route path = '*' element = {<Navigate to = '/' />} />
             </Routes>
