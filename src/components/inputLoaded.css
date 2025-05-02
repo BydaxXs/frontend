@@ -1,0 +1,43 @@
+.inputloaded-box{
+    box-sizing: border-box;
+    background-color: #003c69;
+}
+.inputloaded-box header{
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 45px;
+}
+.inputloaded-field{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0 10px 0 10px;
+}
+.inputloaded{
+    height: 45px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(245, 245, 245,245);
+    outline: none;
+    margin-bottom: 20px;
+    color: white;
+}
+.inputloaded-box .inputloaded-field label{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    pointer-events: none;
+    transition: .4s;
+}
+.inputloaded-field .inputloaded:focus ~ label{
+    top: -10px;
+    font-size: 13px;
+}
+.inputloaded-field .inputloaded:valid ~ label{
+    top: -10px;
+    font-size: 13px;
+}
+.inputloaded-field .inputloaded:focus, .inputloaded-field .inputloaded:valid{
+    border-bottom: 1px solid white;
+}
